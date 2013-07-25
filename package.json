@@ -1,0 +1,29 @@
+{
+  "name": "funql",
+  "version": "0.0.0",
+  "description": "FUNctional Query Language",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test/*.js -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jdeal/funql.git"
+  },
+  "keywords": [
+    "query",
+    "language"
+  ],
+  "author": "Justin Deal",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "9cce8e3902a54839ae4df6be888bc2b3e9bf4731",
+  "bugs": {
+    "url": "https://github.com/jdeal/funql/issues"
+  },
+  "devDependencies": {
+    "quickpeg": "0.0.2",
+    "chai": "~1.7.2",
+    "mocha": "~1.12.0"
+  }
+}
