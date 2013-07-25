@@ -5,10 +5,13 @@
   "version": "0.0.1",
   "keywords": [],
   "dependencies": {},
-  "development": {},
+  "development": {
+    "chaijs/chai": "*"
+  },
   "license": "MIT",
   "main": "index.js",
   "scripts": [
-    "index.js"
+    "index.js",
+    "generated/funql-parser.js"
   ]
 }

@@ -1,7 +1,13 @@
 /* global describe, it, before */
 /* jshint expr: true */
 
-var funql = require('../');
+var funql;
+try {
+  funql = require('../');
+} catch (err) {
+  funql = require('funql');
+}
+
 var expect = require('chai').expect;
 
 var identityCompile = funql.compiler({
