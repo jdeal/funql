@@ -33,7 +33,12 @@ var makeCompiler = function (handlers) {
   };
 
   return function (source) {
-    var ast = parser.parse(source);
+    var ast;
+    if (typeof source === 'string') {
+      ast = parser.parse(source);
+    } else {
+      ast = source;
+    }
     return compileNode({}, ast);
   };
 };

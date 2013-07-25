@@ -69,4 +69,10 @@ describe('funql compiler', function () {
     var result = contextCompile(source);
     expect(result).to.equal('foo(foo_bar(foo_bar_x),foo_baz(foo_baz_y))');
   });
+  it('should compile an ast', function () {
+    var source = 'foo(bar)';
+    var ast = funql.parse(source);
+    var result = identityCompile(ast);
+    expect(result).to.equal(source);
+  });
 });
