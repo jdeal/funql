@@ -1,6 +1,6 @@
 {
   "name": "funql",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "FUNctional Query Language",
   "main": "index.js",
   "scripts": {
