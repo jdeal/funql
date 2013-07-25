@@ -1,7 +1,15 @@
 var parser = require('./generated/funql-parser');
 
 var makeCompiler = function (handlers) {
+  var compileNodes = function (context, nodes, extendContext) {
+    return nodes.map(function (node) {
+      return compileNode(context, node, extendContext);
+    });
+  };
   var compileNode = function (context, node, extendContext) {
+    if (Array.isArray(node)) {
+      return compileNodes(context, node, extendContext);
+    }
     var suffix = '';
     if (node.type === 'name') {
       suffix = '_' + node.value;

@@ -18,9 +18,7 @@ var identityCompile = funql.compiler({
     return value;
   },
   arguments: function (args, compile) {
-    return '(' + args.map(function (arg) {
-      return compile(arg);
-    }).join(',') + ')';
+    return '(' + compile(args).join(',') + ')';
   }
 });
 
