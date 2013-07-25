@@ -139,7 +139,7 @@ dqchar
 
 char
   = '\\"'  { return '"';  }
-  / "\\'"  { return '"';  }
+  / "\\'"  { return "'";  }
   / "\\\\" { return "\\"; }
   / "\\/"  { return "/";  }
   / "\\b"  { return "\b"; }
