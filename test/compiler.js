@@ -65,6 +65,15 @@ var argsCompile = funql.compiler({
   }
 });
 
+var wrapCompile = funql.compiler({
+  __wrap__: function (ast, compile) {
+    return 'wrap(' + compile(ast) + ')';
+  },
+  name: function (value, compile) {
+    return value;
+  }
+});
+
 describe('funql compiler', function () {
   it('should compile with identity compiler', function () {
     var source = 'foo(bar)';
@@ -85,6 +94,11 @@ describe('funql compiler', function () {
     var source = 'add(x,y)';
     var result = argsCompile(source, {x: 1, y: 2});
     expect(result).to.equal(3);
+  });
+  it('should allow __wrap__ pseudo node rule to wrap ast', function () {
+    var source = 'x';
+    var result = wrapCompile(source);
+    expect(result).to.equal('wrap(x)');
   });
   it('should compile an ast', function () {
     var source = 'foo(bar)';

@@ -40,6 +40,12 @@ var makeCompiler = function (handlers) {
       ast = source;
     }
     context = context || {};
+    if (handlers.__wrap__) {
+      ast = {
+        type: '__wrap__',
+        value: ast
+      };
+    }
     return compileNode(context, ast);
   };
 };
