@@ -2,7 +2,7 @@
   "name": "funql",
   "repo": "jdeal/funql",
   "description": "FUNctional Query Language",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "keywords": [],
   "dependencies": {},
   "development": {
