@@ -74,6 +74,18 @@ var wrapCompile = funql.compiler({
   }
 });
 
+var multiTypeCompile = funql.compiler({
+  call: function (args, compile) {
+    return compile(args).join('');
+  },
+  arguments: function (args, compile) {
+    return '(' + compile(args).join(',') + ')';
+  },
+  'name, number': function (value, compile) {
+    return value;
+  }
+});
+
 describe('funql compiler', function () {
   it('should compile with identity compiler', function () {
     var source = 'foo(bar)';
@@ -95,10 +107,15 @@ describe('funql compiler', function () {
     var result = argsCompile(source, {x: 1, y: 2});
     expect(result).to.equal(3);
   });
-  it('should allow __wrap__ pseudo node rule to wrap ast', function () {
+  it('should allow __wrap__ pseudo node handler to wrap ast', function () {
     var source = 'x';
     var result = wrapCompile(source);
     expect(result).to.equal('wrap(x)');
+  });
+  it('should allow multiple types per handler', function () {
+    var source = 'foo(x,1)';
+    var result = multiTypeCompile(source);
+    expect(result).to.equal(source);
   });
   it('should compile an ast', function () {
     var source = 'foo(bar)';

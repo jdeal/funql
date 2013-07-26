@@ -1,6 +1,18 @@
 var parser = require('./generated/funql-parser');
 
-var makeCompiler = function (handlers) {
+var trim = function (str) {
+  return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+};
+
+var makeCompiler = function (_handlers) {
+  var handlers = {};
+  Object.keys(_handlers).forEach(function (originalKey) {
+    originalKey.split(',').map(function (splitKey) {
+      return trim(splitKey);
+    }).forEach(function (trimKey) {
+      handlers[trimKey] = _handlers[originalKey];
+    });
+  });
   var compileNodes = function (context, nodes, extendContext) {
     return nodes.map(function (node) {
       return compileNode(context, node, extendContext);
