@@ -32,14 +32,15 @@ var makeCompiler = function (handlers) {
     }
   };
 
-  return function (source) {
+  return function (source, context) {
     var ast;
     if (typeof source === 'string') {
       ast = parser.parse(source);
     } else {
       ast = source;
     }
-    return compileNode({}, ast);
+    context = context || {};
+    return compileNode(context, ast);
   };
 };
 

@@ -53,6 +53,18 @@ var contextCompile = funql.compiler({
   }
 });
 
+var argsCompile = funql.compiler({
+  call_add: function (args, compile, context) {
+    args = args[1].args;
+    return args.reduce(function (prev, curr, i) {
+      return compile(prev) + compile(curr);
+    });
+  },
+  name: function (value, compile, context) {
+    return context[value];
+  }
+});
+
 describe('funql compiler', function () {
   it('should compile with identity compiler', function () {
     var source = 'foo(bar)';
@@ -68,6 +80,11 @@ describe('funql compiler', function () {
     var source = 'foo(bar(x),baz(y))';
     var result = contextCompile(source);
     expect(result).to.equal('foo(foo_bar(foo_bar_x),foo_baz(foo_baz_y))');
+  });
+  it('should allow passing context to compiler', function () {
+    var source = 'add(x,y)';
+    var result = argsCompile(source, {x: 1, y: 2});
+    expect(result).to.equal(3);
   });
   it('should compile an ast', function () {
     var source = 'foo(bar)';
