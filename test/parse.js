@@ -10,13 +10,27 @@ try {
 
 var expect = require('chai').expect;
 
+var checkNode = function (source, expectNode, value) {
+  if (typeof expectNode === 'string') {
+    expectNode = funql.node(expectNode, value);
+  }
+  it('should map ' + source + ' to ' + expectNode.type + ' node', function () {
+    var node = funql.parse(source);
+    expect(node).to.deep.equal(expectNode);
+  });
+};
+
 describe('funql parser', function () {
-  it('should escape apostrophe', function () {
-    var node = funql.parse("'x\\'y'");
-    expect(node.value).to.equal("x'y");
-  });
-  it('should escape double-quote', function () {
-    var node = funql.parse('"x\\"y"');
-    expect(node.value).to.equal('x"y');
-  });
+  checkNode('1', 'integer', 1);
+  checkNode('1.2', 'float', 1.2);
+  checkNode('-1', 'integer', -1);
+  checkNode('-1.2', 'float', -1.2);
+  checkNode("'abc'", 'string', 'abc');
+  checkNode('"abc"', 'string', 'abc');
+  checkNode("'x\\'y'", 'string', "x'y");
+  checkNode('"x\\"y"', 'string', 'x"y');
+  checkNode('true', 'boolean', true);
+  checkNode('false', 'boolean', false);
+  checkNode('foo', 'name', 'foo');
+  checkNode('foo()', funql.node('call', [funql.node('name', 'foo'), funql.node('arguments', [])]));
 });

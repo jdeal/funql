@@ -800,7 +800,7 @@ module.exports = (function(){
         }
         if (result0 !== null) {
           result0 = (function(offset, isTrue) {
-            return makeNode('name', isTrue);
+            return makeNode('boolean', isTrue === 'true' ? true : false);
           })(pos0, result0);
         }
         if (result0 === null) {
@@ -1317,7 +1317,7 @@ module.exports = (function(){
           pos = pos1;
         }
         if (result0 !== null) {
-          result0 = (function(offset, int_, frac, exp) { return makeNode('number', parseFloat(int_ + frac + exp)); })(pos0, result0[0], result0[1], result0[2]);
+          result0 = (function(offset, int_, frac, exp) { return makeNode('float', parseFloat(int_ + frac + exp)); })(pos0, result0[0], result0[1], result0[2]);
         }
         if (result0 === null) {
           pos = pos0;
@@ -1345,7 +1345,7 @@ module.exports = (function(){
             pos = pos1;
           }
           if (result0 !== null) {
-            result0 = (function(offset, int_, frac) { return makeNode('number', parseFloat(int_ + frac));       })(pos0, result0[0], result0[1]);
+            result0 = (function(offset, int_, frac) { return makeNode('float', parseFloat(int_ + frac));       })(pos0, result0[0], result0[1]);
           }
           if (result0 === null) {
             pos = pos0;
@@ -1373,7 +1373,7 @@ module.exports = (function(){
               pos = pos1;
             }
             if (result0 !== null) {
-              result0 = (function(offset, int_, exp) { return makeNode('number', parseFloat(int_ + exp));        })(pos0, result0[0], result0[1]);
+              result0 = (function(offset, int_, exp) { return makeNode('integer', parseFloat(int_ + exp));        })(pos0, result0[0], result0[1]);
             }
             if (result0 === null) {
               pos = pos0;
@@ -1395,7 +1395,7 @@ module.exports = (function(){
                 pos = pos1;
               }
               if (result0 !== null) {
-                result0 = (function(offset, int_) { return makeNode('number', parseFloat(int_));              })(pos0, result0[0]);
+                result0 = (function(offset, int_) { return makeNode('integer', parseFloat(int_));              })(pos0, result0[0]);
               }
               if (result0 === null) {
                 pos = pos0;
@@ -1763,7 +1763,7 @@ module.exports = (function(){
       
         var makeNode = function (type, value) {
           if (Array.isArray(value)) {
-            return {type: type, args: value};
+            return {type: type, nodes: value};
           } else {
             return {type: type, value: value};
           }

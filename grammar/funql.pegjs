@@ -1,7 +1,7 @@
 {
   var makeNode = function (type, value) {
     if (Array.isArray(value)) {
-      return {type: type, args: value};
+      return {type: type, nodes: value};
     } else {
       return {type: type, value: value};
     }
@@ -114,7 +114,7 @@ key
 
 boolean
   = isTrue: ("true" / "false") {
-    return makeNode('name', isTrue);
+    return makeNode('boolean', isTrue === 'true' ? true : false);
   }
 
 string
@@ -152,10 +152,10 @@ char
     }
 
 number "number"
-  = int_:int frac:frac exp:exp _ { return makeNode('number', parseFloat(int_ + frac + exp)); }
-  / int_:int frac:frac _         { return makeNode('number', parseFloat(int_ + frac));       }
-  / int_:int exp:exp _           { return makeNode('number', parseFloat(int_ + exp));        }
-  / int_:int _                   { return makeNode('number', parseFloat(int_));              }
+  = int_:int frac:frac exp:exp _ { return makeNode('float', parseFloat(int_ + frac + exp)); }
+  / int_:int frac:frac _         { return makeNode('float', parseFloat(int_ + frac));       }
+  / int_:int exp:exp _           { return makeNode('integer', parseFloat(int_ + exp));        }
+  / int_:int _                   { return makeNode('integer', parseFloat(int_));              }
 
 int
   = digit19:digit19 digits:digits     { return digit19 + digits;       }
