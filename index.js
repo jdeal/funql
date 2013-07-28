@@ -130,8 +130,14 @@ var node = function (type, value) {
   }
 };
 
+var sourceCompile = makeCompiler(require('./lib/compilers/source'));
+
 module.exports = {
   parse: parser.parse.bind(parser),
   compiler: makeCompiler,
-  node: node
+  node: node,
+  source: sourceCompile,
+  compilers: {
+    source: sourceCompile
+  }
 };
