@@ -9,7 +9,15 @@
 }
 
 start
-  = item
+  = _ first:item? _ rest:item* {
+    if (rest && rest.length > 0) {
+      return makeNode('array', [first].concat(rest));
+    } else if (first) {
+      return first;
+    } else {
+      return makeNode('empty', null);
+    }
+  }
 
 item
   = item: (
@@ -19,6 +27,7 @@ item
       string /
       boolean /
       number /
+      null /
       identifier
     )
 
@@ -115,6 +124,11 @@ key
 boolean
   = isTrue: ("true" / "false") {
     return makeNode('boolean', isTrue === 'true' ? true : false);
+  }
+
+null
+  = name: "null" {
+    return makeNode('null', null);
   }
 
 string

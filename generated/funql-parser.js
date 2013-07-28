@@ -37,6 +37,7 @@ module.exports = (function(){
      */
     parse: function(input, startRule) {
       var parseFunctions = {
+        "start": parse_start,
         "item": parse_item,
         "object": parse_object,
         "objectItem": parse_objectItem,
@@ -53,6 +54,7 @@ module.exports = (function(){
         "keyValueArgument": parse_keyValueArgument,
         "key": parse_key,
         "boolean": parse_boolean,
+        "null": parse_null,
         "string": parse_string,
         "sqchars": parse_sqchars,
         "dqchars": parse_dqchars,
@@ -77,7 +79,7 @@ module.exports = (function(){
           throw new Error("Invalid rule name: " + quote(startRule) + ".");
         }
       } else {
-        startRule = "item";
+        startRule = "start";
       }
       
       var pos = 0;
@@ -125,6 +127,60 @@ module.exports = (function(){
         rightmostFailuresExpected.push(failure);
       }
       
+      function parse_start() {
+        var result0, result1, result2, result3, result4;
+        var pos0, pos1;
+        
+        pos0 = pos;
+        pos1 = pos;
+        result0 = parse__();
+        if (result0 !== null) {
+          result1 = parse_item();
+          result1 = result1 !== null ? result1 : "";
+          if (result1 !== null) {
+            result2 = parse__();
+            if (result2 !== null) {
+              result3 = [];
+              result4 = parse_item();
+              while (result4 !== null) {
+                result3.push(result4);
+                result4 = parse_item();
+              }
+              if (result3 !== null) {
+                result0 = [result0, result1, result2, result3];
+              } else {
+                result0 = null;
+                pos = pos1;
+              }
+            } else {
+              result0 = null;
+              pos = pos1;
+            }
+          } else {
+            result0 = null;
+            pos = pos1;
+          }
+        } else {
+          result0 = null;
+          pos = pos1;
+        }
+        if (result0 !== null) {
+          result0 = (function(offset, first, rest) {
+            if (rest && rest.length > 0) {
+              return makeNode('array', [first].concat(rest));
+            } else if (first) {
+              return first;
+            } else {
+              return makeNode('empty', null);
+            }
+          })(pos0, result0[1], result0[3]);
+        }
+        if (result0 === null) {
+          pos = pos0;
+        }
+        return result0;
+      }
+      
       function parse_item() {
         var result0;
         
@@ -140,7 +196,10 @@ module.exports = (function(){
                 if (result0 === null) {
                   result0 = parse_number();
                   if (result0 === null) {
-                    result0 = parse_identifier();
+                    result0 = parse_null();
+                    if (result0 === null) {
+                      result0 = parse_identifier();
+                    }
                   }
                 }
               }
@@ -801,6 +860,31 @@ module.exports = (function(){
         if (result0 !== null) {
           result0 = (function(offset, isTrue) {
             return makeNode('boolean', isTrue === 'true' ? true : false);
+          })(pos0, result0);
+        }
+        if (result0 === null) {
+          pos = pos0;
+        }
+        return result0;
+      }
+      
+      function parse_null() {
+        var result0;
+        var pos0;
+        
+        pos0 = pos;
+        if (input.substr(pos, 4) === "null") {
+          result0 = "null";
+          pos += 4;
+        } else {
+          result0 = null;
+          if (reportFailures === 0) {
+            matchFailed("\"null\"");
+          }
+        }
+        if (result0 !== null) {
+          result0 = (function(offset, name) {
+            return makeNode('null', null);
           })(pos0, result0);
         }
         if (result0 === null) {

@@ -16,13 +16,15 @@ var parser = require('./generated/funql-parser');
 //         integer
 //         float
 //       string
+//       null
+//       empty
 //     name
 
 var typeHierarchy = {
   node: ['list', 'item'],
   list: ['call', 'array', 'object', 'property', 'arguments'],
   item: ['value', 'name'],
-  value: ['boolean', 'number', 'string'],
+  value: ['boolean', 'number', 'string', 'null', 'empty'],
   number: ['integer', 'float']
 };
 

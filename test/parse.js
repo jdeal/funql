@@ -33,4 +33,9 @@ describe('funql parser', function () {
   checkNode('false', 'boolean', false);
   checkNode('foo', 'name', 'foo');
   checkNode('foo()', funql.node('call', [funql.node('name', 'foo'), funql.node('arguments', [])]));
+  checkNode('  1  ', 'integer', 1);
+  checkNode('  ', 'empty', null);
+  checkNode('null', 'null', null);
+  checkNode('1 2', funql.node('array', [funql.node('integer', 1), funql.node('integer', 2)]));
+  checkNode('[1 2]', funql.node('array', [funql.node('integer', 1), funql.node('integer', 2)]));
 });
