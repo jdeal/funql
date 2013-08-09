@@ -87,10 +87,10 @@ identifierKey
   }
 
 identifierStart
-  = [a-zA-Z_]
+  = [$a-zA-Z_]
 
 identifierChar
-  = [a-zA-Z_0-9]
+  = [$a-zA-Z_0-9]
 
 arguments
   = first:argument rest:(_ ","? _ argument)* {

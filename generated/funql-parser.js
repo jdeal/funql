@@ -601,13 +601,13 @@ module.exports = (function(){
       function parse_identifierStart() {
         var result0;
         
-        if (/^[a-zA-Z_]/.test(input.charAt(pos))) {
+        if (/^[$a-zA-Z_]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
         } else {
           result0 = null;
           if (reportFailures === 0) {
-            matchFailed("[a-zA-Z_]");
+            matchFailed("[$a-zA-Z_]");
           }
         }
         return result0;
@@ -616,13 +616,13 @@ module.exports = (function(){
       function parse_identifierChar() {
         var result0;
         
-        if (/^[a-zA-Z_0-9]/.test(input.charAt(pos))) {
+        if (/^[$a-zA-Z_0-9]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
         } else {
           result0 = null;
           if (reportFailures === 0) {
-            matchFailed("[a-zA-Z_0-9]");
+            matchFailed("[$a-zA-Z_0-9]");
           }
         }
         return result0;

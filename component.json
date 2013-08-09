@@ -13,6 +13,7 @@
   "scripts": [
     "index.js",
     "generated/funql-parser.js",
-    "lib/compilers/source.js"
+    "lib/compilers/source.js",
+    "lib/compilers/replace.js"
   ]
 }
