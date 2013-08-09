@@ -20,4 +20,7 @@ var testCompile = function (source, params, compiledSource) {
 describe('funql source compiler', function () {
   testCompile("foo(bar)", {bar: 'baz'}, 'foo("baz")');
   testCompile("foo($bar)", {$bar: 'baz'}, 'foo("baz")');
+  testCompile("foo(bar)", {bar: 1}, 'foo(1)');
+  testCompile("foo(bar)", {bar: true}, 'foo(true)');
+  testCompile("foo(bar)", {bar: ['baz']}, 'foo(["baz"])');
 });
