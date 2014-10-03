@@ -132,6 +132,7 @@ var node = function (type, value) {
 
 var sourceCompile = makeCompiler(require('./lib/compilers/source'));
 var replaceCompile = makeCompiler(require('./lib/compilers/replace'));
+var javascriptCompile = makeCompiler(require('./lib/compilers/javascript'));
 
 module.exports = {
   parse: parser.parse.bind(parser),
@@ -139,8 +140,10 @@ module.exports = {
   node: node,
   source: sourceCompile,
   build: replaceCompile,
+  toFunction: require('./lib/to-function')(javascriptCompile),
   compilers: {
     source: sourceCompile,
-    replace: replaceCompile
+    replace: replaceCompile,
+    javascript: javascriptCompile
   }
 };
