@@ -32,4 +32,7 @@ describe('funql parser', function () {
   checkResult('sum(1)', {}, 1);
   checkResult('sum(1,2)', {}, 3);
   checkResult('sum(1,2,3)', {}, 6);
+  checkResult('sum(a,b)', {a: 1, b: 2}, 3);
+  checkResult("get(foo, 'bar')", {foo: {bar: 3}}, 3);
+  checkResult("get(foo, ['bar', 'baz'])", {foo: {bar: {baz: 'x'}}}, 'x');
 });
